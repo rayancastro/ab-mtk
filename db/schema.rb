@@ -10,10 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_13_133934) do
+ActiveRecord::Schema.define(version: 2021_03_13_163518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "ab_tests", force: :cascade do |t|
+    t.string "name"
+    t.boolean "active"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "token"
+    t.index ["token"], name: "index_ab_tests_on_token", unique: true
+  end
+
+  create_table "segments", force: :cascade do |t|
+    t.string "name"
+    t.bigint "ab_test_id", null: false
+    t.string "url"
+    t.integer "total_views", default: 0
+    t.integer "total_conversions", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "ab_token"
+    t.index ["ab_test_id"], name: "index_segments_on_ab_test_id"
+    t.index ["ab_token"], name: "index_segments_on_ab_token", unique: true
+  end
+
+  create_table "shops", force: :cascade do |t|
+    t.string "shopify_domain", null: false
+    t.string "shopify_token", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shopify_domain"], name: "index_shops_on_shopify_domain", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -27,4 +57,5 @@ ActiveRecord::Schema.define(version: 2021_03_13_133934) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "segments", "ab_tests"
 end

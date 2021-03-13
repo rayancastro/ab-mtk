@@ -33,6 +33,12 @@ gem 'devise'
 gem 'autoprefixer-rails'
 gem 'font-awesome-sass'
 gem 'simple_form'
+
+gem 'shopify_app'
+gem 'shopify_api', '~> 9.1.0'
+
+gem 'rack-cors'
+
 group :development, :test do  gem 'pry-byebug'
   gem 'pry-rails'
   gem 'dotenv-rails'

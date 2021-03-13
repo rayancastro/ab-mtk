@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8 offset-2">
+      <div class="white-card">
+        <h1><%= @ab_test.name %> </h1>
+        <p><%= @ab_test.active ? "ACTIVE" : "INACTIVE" %></p>
+
+        <div class="segments">
+          <ul>
+            <% @ab_test.segments.each do |segment| %>
+              <li><%= segment.name %> - <%= segment.url %> </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <%= link_to "Add Segment", new_ab_test_segment_path(@ab_test), class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
