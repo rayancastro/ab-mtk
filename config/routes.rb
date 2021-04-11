@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       get 'ab_test_data', to: 'ab_tests#ab_test_data'
+      get 'js_lib', to: 'ab_tests#js_lib'
     end
   end
 end

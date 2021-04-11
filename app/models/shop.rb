@@ -2,6 +2,8 @@
 class Shop < ActiveRecord::Base
   include ShopifyApp::ShopSessionStorage
 
+  has_many :ab_tests
+
   def api_version
     ShopifyApp.configuration.api_version
   end

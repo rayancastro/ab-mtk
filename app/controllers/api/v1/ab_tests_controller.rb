@@ -9,4 +9,11 @@ class Api::V1::AbTestsController < Api::V1::BaseController
 
     render json: { segment_url: segment.url }
   end
+
+  def js_lib
+    render file: '/api/v1/ab_tests/js_lib', handlers: [:erb], formats: [:js], locals: { name: "John" }, layout: false
+    # format.js do
+    #   render "segment_rendering", layout: false
+    # end
+  end
 end

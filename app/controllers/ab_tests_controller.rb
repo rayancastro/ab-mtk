@@ -1,7 +1,9 @@
-class AbTestsController < ApplicationController
+class AbTestsController < AuthenticatedController
   before_action :set_ab_test, only: [:show, :edit, :update]
+  before_action :verbose_shopify
+
   def index
-    @ab_tests = AbTest.all
+    @ab_tests = current_shop.ab_tests
   end
 
   def show
@@ -13,6 +15,7 @@ class AbTestsController < ApplicationController
 
   def create
     @ab_test = AbTest.new(ab_test_params)
+    @ab_test.shop = current_shop
     if @ab_test.save
       redirect_to ab_test_path(@ab_test)
     else
@@ -35,10 +38,16 @@ class AbTestsController < ApplicationController
   private
 
   def set_ab_test
-    @ab_test = AbTest.find(params[:id])
+    @ab_test = current_shop.ab_tests.find(params[:id])
   end
 
   def ab_test_params
     params.require(:ab_test).permit(:name, :active)
+  end
+
+  def verbose_shopify
+    puts "Verbose"
+    p current_shop
+    p current_shopify_domain
   end
 end
